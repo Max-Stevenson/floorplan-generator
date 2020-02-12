@@ -39,42 +39,57 @@ startButton.onclick = event => {
     }
   };
   console.log(roomDetails);
-  drawDoor(roomDetails);
+  let door = randomisePlacement("door", 20, roomDetails);
+  drawOpening(door);
 };
 
 const drawRoomOutline = (startLeft, startTop, width, height) => {
   ctx.strokeRect(startLeft, startTop, width, height);
 };
 
-const drawOpening = (opening, room) => {
+const drawOpening = opening => {
   ctx.beginPath();
-  ctx.moveTo(door.x, door.y);
-  ctx.lineTo(door.x + doorLength, door.y);
+  ctx.moveTo(opening.start.x, opening.start.y);
+  ctx.lineTo(opening.finish.x, opening.finish.y);
   ctx.lineWidth = 3;
   ctx.strokeStyle = "#ff0000";
   ctx.stroke();
 };
 
 const randomisePlacement = (openingName, openingSize, room) => {
-  index = 0; //randomise
+  index = 1; //randomise
   switch (index) {
     case 0:
+      randomStart = getRandomInt(
+        room.dimensions.topLeft.x,
+        room.dimensions.topRight.x - openingSize
+      );
       return (opening = {
         name: openingName,
-        x: getRandomInt(
-          room.dimensions.topLeft.x,
-          room.dimensions.topRight.x - openingSize
-        ),
-        y: room.dimensions.topLeft.y
+        start: {
+          x: randomStart,
+          y: room.dimensions.topLeft.y
+        },
+        finish: {
+          x: randomStart + openingSize,
+          y: room.dimensions.topLeft.y
+        }
       });
     case 1:
+      randomStart = getRandomInt(
+        room.dimensions.topRight.y,
+        room.dimensions.bottomRight.y - openingSize
+      );
       return (opening = {
         name: openingName,
-        x: room.dimensions.topRight.x,
-        y: getRandomInt(
-          room.dimensions.topRight.y,
-          room.dimensions.topRight.y - openingSize
-        )
+        start: {
+          x: room.dimensions.topRight.x,
+          y: randomStart
+        },
+        finish: {
+          x: room.dimensions.topRight.x,
+          y: randomStart + openingSize
+        }
       });
     default:
       return;
@@ -86,4 +101,5 @@ const recordRoom = roomDetails => {};
 clearButton.onclick = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.strokeStyle = "#000000";
+  ctx.lineWidth = 1;
 };
