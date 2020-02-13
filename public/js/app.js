@@ -15,7 +15,7 @@ startButton.onclick = event => {
   let width = getRandomInt(100, 200);
   let height = getRandomInt(100, 200);
   drawRoomOutline(startX, startY, width, height);
-  const roomDetails = {
+  let roomDetails = {
     title: "bedroom",
     dimensions: {
       width: width,
@@ -41,6 +41,8 @@ startButton.onclick = event => {
   console.log(roomDetails);
   let door = randomisePlacement("door", 20, roomDetails);
   drawOpening(door);
+  roomDetails = { ...roomDetails, door};
+  console.log(roomDetails);
 };
 
 const drawRoomOutline = (startLeft, startTop, width, height) => {
@@ -57,7 +59,7 @@ const drawOpening = opening => {
 };
 
 const randomisePlacement = (openingName, openingSize, room) => {
-  index = 1; //randomise
+  index = getRandomInt(0, 1);
   switch (index) {
     case 0:
       randomStart = getRandomInt(
