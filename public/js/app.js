@@ -10,6 +10,9 @@ function getRandomInt(min, max) {
 }
 
 startButton.onclick = event => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = "#000000";
+  ctx.lineWidth = 1;
   let startX = 10;
   let startY = 10;
   let width = getRandomInt(100, 200);
@@ -56,6 +59,10 @@ const drawOpening = opening => {
   ctx.lineWidth = 3;
   ctx.strokeStyle = "#ff0000";
   ctx.stroke();
+};
+
+const checkForExistingOpening = (room) => {
+
 };
 
 const randomisePlacement = (openingName, openingSize, room) => {
